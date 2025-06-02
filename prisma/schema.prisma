@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider        = "prisma-client"
+  output          = "../app/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -14,6 +15,8 @@ model User {
   name  String?
   age   Int?
   posts Post[]
+
+  @@map("users") 
 }
 
 model Post {
@@ -21,6 +24,8 @@ model Post {
   title     String
   content   String?
   published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+  author_id  Int
+  author    User    @relation(fields: [author_id], references: [id])
+
+  @@map("posts")
 }
