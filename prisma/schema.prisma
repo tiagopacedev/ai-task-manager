@@ -15,7 +15,6 @@ model User {
   age Int?
   name  String?
   posts Post[]
-  
   @@map("users")
 }
 
@@ -26,23 +25,37 @@ model Post {
   published Boolean @default(false)
   author_id  Int
   author    User    @relation(fields: [author_id], references: [id])
-
   @@map("posts")
+}
+
+model Chat {
+  id       String   @id @default(uuid())
+  title     String?
+  content   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  task      Task?
+
+  @@map("chats")
 }
 
 model Task {
   id                        String   @id @default(uuid())
   title                     String
-  description              String
-  steps                    String?   
-  estimated_time           String
+  description               String
+  steps                     String?
+  estimated_time            String
   implementation_suggestion String?
-  acceptance_criteria      String?   
-  suggested_tests         String?   
-  content                 String?  
-  chat_history            String?  
-  created_at              DateTime @default(now())
-  updated_at              DateTime @updatedAt
+  acceptance_criteria       String?
+  suggested_tests           String?
+  content                   String?
+  chat_history              String?
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+  chat                      Chat     @relation(fields: [chat_id], references: [id])
+  chat_id                   String      @unique
 
   @@map("tasks")
 }
