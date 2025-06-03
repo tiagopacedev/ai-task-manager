@@ -1,6 +1,6 @@
 generator client {
-  provider        = "prisma-client"
-  output          = "../app/generated/prisma"
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
   previewFeatures = ["driverAdapters"]
 }
 
@@ -12,11 +12,11 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
+  age Int?
   name  String?
-  age   Int?
   posts Post[]
-
-  @@map("users") 
+  
+  @@map("users")
 }
 
 model Post {
@@ -28,4 +28,21 @@ model Post {
   author    User    @relation(fields: [author_id], references: [id])
 
   @@map("posts")
+}
+
+model Task {
+  id                        String   @id @default(uuid())
+  title                     String
+  description              String
+  steps                    String?   
+  estimated_time           String
+  implementation_suggestion String?
+  acceptance_criteria      String?   
+  suggested_tests         String?   
+  content                 String?  
+  chat_history            String?  
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+
+  @@map("tasks")
 }
