@@ -1,7 +1,10 @@
 import './app.css'
+import '@copilotkit/react-ui/styles.css'
 
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router'
 
+import { CopilotKit } from '@copilotkit/react-core'
+import { CopilotSidebar } from '@copilotkit/react-ui'
 import type { Route } from './+types/root'
 import { Toaster } from 'sonner'
 
@@ -28,10 +31,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-        <Toaster position="top-right" />
+        <CopilotKit runtimeUrl="http://localhost:5173/copilotkit">
+          <CopilotSidebar
+            labels={{
+              title: 'Assitente de Tarefas',
+              initial: 'Faça uma pergunta sobre as tarefas',
+            }}
+          >
+            {children}
+            <ScrollRestoration />
+            <Scripts />
+            <Toaster position="top-right" />
+          </CopilotSidebar>
+        </CopilotKit>
       </body>
     </html>
   )
