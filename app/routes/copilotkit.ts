@@ -5,6 +5,8 @@ import { findSimilarTasks } from '~/services/task.server'
 
 const serviceAdapter = new OpenAIAdapter({ openai: client })
 
+const urlTemplate = `${process.env.APP_URL}/task/view/<id>`
+
 const runtime = new CopilotRuntime({
   actions: () => [
     {
@@ -15,7 +17,7 @@ const runtime = new CopilotRuntime({
     -	Retorne os dados completos e o link da tarefa.
   Use o seguinte template em markdown para apresentar os resultados:
   
-  ### [title](http://localhost:5173/task/view/<id>)
+  ### [title](${urlTemplate})
   
   > description
   
