@@ -3,7 +3,7 @@ import OpenAI from 'openai'
 import prisma from 'prisma/prisma'
 
 export const client = new OpenAI({
-  apiKey: process.env['OPENAI_KEY'],
+  apiKey: process.env['OPENAI_API_KEY'],
 })
 
 const SYSTEM_PROMPT = `
@@ -78,4 +78,44 @@ export async function createChatMessages(chatId: string, chatMessage: Message, a
       { chat_id: chatId, ...answer },
     ],
   })
+}
+
+export async function deleteChat(formData: FormData) {
+  const chatId = formData.get('chat_id') as string
+
+  try {
+    await prisma.chatMessage.deleteMany({
+      where: {
+        chat_id: chatId,
+      },
+    })
+
+    await prisma.chat.delete({
+      where: {
+        id: chatId,
+      },
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: '' }
+  }
+}
+
+export async function updateChat(formData: FormData) {
+  const chatId = formData.get('chat_id') as string
+  const title = formData.get('title') as string
+
+  if (!chatId) {
+    return { success: false, error: 'Dados inválidos' }
+  }
+
+  try {
+    await prisma.chat.update({
+      where: { id: chatId },
+      data: { title },
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: '' }
+  }
 }
