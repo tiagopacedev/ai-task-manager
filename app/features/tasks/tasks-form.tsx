@@ -1,108 +1,110 @@
+import { useFetcher, useLoaderData } from 'react-router'
+
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Textarea } from '~/components/ui/textarea'
+import type { loader } from '~/routes/task-edit'
+import { toast } from 'sonner'
+import { useEffect } from 'react'
 
 export function TaskForm() {
+  const { task } = useLoaderData<typeof loader>()
+  const fetcher = useFetcher()
   // Helper function to convert array to string
   const arrayToString = (arr: string[]) => arr.join('\n')
 
-  // Sample data from JSON
-  const sampleSteps = [
-    'Create a form component using React',
-    'Add field validation using a suitable library',
-    'Connect backend for user authentication',
-    'Persist sessions using SQLite',
-    'Test the complete login and logout flow',
-  ]
-
-  const sampleTests = [
-    "it('should render the login form correctly')",
-    "it('should validate input fields')",
-    "it('should authenticate valid credentials')",
-    "it('should prevent access with invalid credentials')",
-  ]
-
-  const sampleCriteria = [
-    'Login form displays correctly with required fields',
-    'Invalid input is properly flagged',
-    'Valid users can log in and maintain a session',
-    'Users are redirected after login and logout',
-  ]
+  useEffect(() => {
+    if (fetcher.state === 'idle') {
+      if (fetcher.data?.success) {
+        toast.success('Task atualizada com sucesso')
+      } else {
+        toast.error('Falha ao atualizar a task')
+      }
+    }
+  }, [fetcher.state, fetcher.data])
 
   return (
-    <form className="space-y-6 p-6">
-      {/* Title */}
+    <fetcher.Form method="POST" className="space-y-6 p-6">
+      {/* Título */}
       <div className="space-y-2">
-        <Label htmlFor="title">Title</Label>
-        <Input id="title" defaultValue="Secure Login Form with Authentication" />
+        <Label htmlFor="title">Título</Label>
+        <Input id="title" name="title" defaultValue={task.title} />
       </div>
-      {/* Description */}
+      {/* Descrição */}
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">Descrição</Label>
         <Textarea
           className="h-36"
           id="description"
-          defaultValue="Implement a modern login form with field validation, session-based authentication, and real-time error feedback."
+          name="description"
+          defaultValue={task.description}
         />
       </div>
 
-      {/* Estimated Time */}
+      {/* Tempo Estimado */}
       <div className="space-y-2">
-        <Label htmlFor="estimatedTime">Estimated Time</Label>
-        <Input id="estimatedTime" defaultValue="2 days" />
+        <Label htmlFor="estimatedTime">Tempo Estimado</Label>
+        <Input id="estimatedTime" name="estimated_time" defaultValue={task.estimated_time} />
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Steps */}
+        {/* Etapas */}
         <div className="space-y-2">
-          <Label htmlFor="steps">Steps</Label>
+          <Label htmlFor="steps">Etapas</Label>
           <Textarea
             className="h-36"
             id="steps"
+            name="steps"
             rows={6}
-            defaultValue={arrayToString(sampleSteps)}
+            defaultValue={arrayToString(JSON.parse(task.steps ?? ''))}
           />
         </div>
 
-        {/* Suggested Tests */}
+        {/* Testes Sugeridos */}
         <div className="space-y-2">
-          <Label htmlFor="suggestedTests">Suggested Tests</Label>
+          <Label htmlFor="suggestedTests">Testes Sugeridos</Label>
           <Textarea
             className="h-36"
             id="suggestedTests"
+            name="suggested_tests"
             rows={5}
-            defaultValue={arrayToString(sampleTests)}
+            defaultValue={arrayToString(JSON.parse(task.suggested_tests ?? ''))}
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Acceptance Criteria */}
+        {/* Critérios de Aceitação */}
         <div className="space-y-2">
-          <Label htmlFor="acceptanceCriteria">Acceptance Criteria</Label>
+          <Label htmlFor="acceptanceCriteria">Critérios de Aceitação</Label>
           <Textarea
             className="h-36"
             id="acceptanceCriteria"
+            name="acceptance_criteria"
             rows={5}
-            defaultValue={arrayToString(sampleCriteria)}
+            defaultValue={arrayToString(JSON.parse(task.acceptance_criteria ?? ''))}
           />
         </div>
 
-        {/* Implementation Suggestion */}
+        {/* Sugestão de Implementação */}
         <div className="space-y-2">
-          <Label htmlFor="implementationSuggestion">Implementation Suggestion</Label>
+          <Label htmlFor="implementationSuggestion">Sugestão de Implementação</Label>
           <Textarea
             className="h-36"
             id="implementationSuggestion"
-            defaultValue="Use React Hook Form for input validation, Prisma ORM to manage user data, and set up protected routes using React Router 7."
+            name="implementation_suggestion"
+            defaultValue={task.implementation_suggestion ?? ''}
           />
         </div>
       </div>
 
       <div className="flex justify-end">
-        <Button type="submit">Save Task</Button>
+        <input type="hidden" name="task_id" value={task.id} />
+        <Button type="submit" disabled={fetcher.state !== 'idle'}>
+          Salvar Tarefa
+        </Button>
       </div>
-    </form>
+    </fetcher.Form>
   )
 }
