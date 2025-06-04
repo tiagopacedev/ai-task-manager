@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { IconDashboard, IconInnerShadowTop } from '@tabler/icons-react'
-import { ListCheckIcon, UsersIcon } from 'lucide-react'
+import { ListCheckIcon, MessageCircleCode, UsersIcon } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -17,8 +17,8 @@ import { NavUser } from '~/components/nav-user'
 
 const data = {
   user: {
-    name: 'User Name',
-    email: 'user@example.com',
+    name: 'Vedovelli',
+    email: 'fabio@vedovelli.com.br',
     avatar: '/avatars/shadcn.jpg',
   },
   navMain: [
@@ -36,6 +36,11 @@ const data = {
       title: 'Tasks',
       url: '/tasks',
       icon: ListCheckIcon,
+    },
+    {
+      title: 'Chats',
+      url: '/chats',
+      icon: MessageCircleCode,
     },
   ],
 }
