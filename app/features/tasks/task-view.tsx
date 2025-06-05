@@ -38,7 +38,7 @@ export function TaskView({ task, similarTasks }: Props) {
       <Breadcrumb className="mb-4">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/tasks">Tarefas</BreadcrumbLink>
+            <BreadcrumbLink href="/tasks">Tasks</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -57,14 +57,14 @@ export function TaskView({ task, similarTasks }: Props) {
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
             <div>
-              <Label className="mb-1">Descrição</Label>
+              <Label className="mb-1">Description</Label>
               <p className="text-base text-muted-foreground whitespace-pre-line bg-muted/40 rounded-md p-3 border mt-1">
                 {task.description}
               </p>
             </div>
             {task.implementation_suggestion && (
               <div>
-                <Label className="mb-1">Sugestão de Implementação</Label>
+                <Label className="mb-1">Implementation Suggestion</Label>
                 <p className="text-sm text-muted-foreground whitespace-pre-line bg-muted/30 rounded-md p-3 border mt-1">
                   {task.implementation_suggestion}
                 </p>
@@ -73,9 +73,9 @@ export function TaskView({ task, similarTasks }: Props) {
             <Separator />
             <Tabs defaultValue="steps" className="w-full">
               <TabsList>
-                <TabsTrigger value="steps">Passos</TabsTrigger>
-                <TabsTrigger value="acceptance">Critérios de Aceite</TabsTrigger>
-                <TabsTrigger value="tests">Testes Sugeridos</TabsTrigger>
+                <TabsTrigger value="steps">Steps</TabsTrigger>
+                <TabsTrigger value="acceptance">Acceptance Criteria</TabsTrigger>
+                <TabsTrigger value="tests">Suggested Tests</TabsTrigger>
               </TabsList>
               <TabsContent value="steps">
                 <ul className="list-decimal list-inside space-y-2 mt-2">
@@ -86,7 +86,7 @@ export function TaskView({ task, similarTasks }: Props) {
                       </li>
                     ))
                   ) : (
-                    <li className="text-muted-foreground">Nenhum passo cadastrado.</li>
+                    <li className="text-muted-foreground">No steps found.</li>
                   )}
                 </ul>
               </TabsContent>
@@ -99,7 +99,7 @@ export function TaskView({ task, similarTasks }: Props) {
                       </li>
                     ))
                   ) : (
-                    <li className="text-muted-foreground">Nenhum critério cadastrado.</li>
+                    <li className="text-muted-foreground">No acceptance criteria found.</li>
                   )}
                 </ul>
               </TabsContent>
@@ -112,25 +112,25 @@ export function TaskView({ task, similarTasks }: Props) {
                       </li>
                     ))
                   ) : (
-                    <li className="text-muted-foreground">Nenhum teste sugerido.</li>
+                    <li className="text-muted-foreground">No suggested tests found.</li>
                   )}
                 </ul>
               </TabsContent>
             </Tabs>
           </CardContent>
           <CardFooter className="justify-end text-xs text-muted-foreground">
-            Criado em: {new Date(task.created_at).toLocaleString('pt-BR')}
+            Created at: {new Date(task.created_at).toLocaleString('en-US')}
             {task.updated_at && (
               <span className="ml-4">
-                Atualizado em: {new Date(task.updated_at).toLocaleString('pt-BR')}
+                Updated at: {new Date(task.updated_at).toLocaleString('en-US')}
               </span>
             )}
           </CardFooter>
         </Card>
         <Card className="bg-muted/40">
           <CardHeader>
-            <CardTitle className="text-lg">Tarefas Similares</CardTitle>
-            <CardDescription>Outras tarefas que podem ser relevantes para você</CardDescription>
+            <CardTitle className="text-lg">Similar Tasks</CardTitle>
+            <CardDescription>Other tasks that may be relevant to you</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col p-0">
             {similarTasks && similarTasks.length > 0 ? (
@@ -167,9 +167,7 @@ export function TaskView({ task, similarTasks }: Props) {
                 )
               })
             ) : (
-              <div className="text-muted-foreground text-sm p-6">
-                Nenhuma tarefa similar encontrada.
-              </div>
+              <div className="text-muted-foreground text-sm p-6">No similar tasks found.</div>
             )}
           </CardContent>
         </Card>

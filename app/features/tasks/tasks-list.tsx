@@ -21,9 +21,9 @@ export function TasksList() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[300px]">Título</TableHead>
-            <TableHead className="w-[100px]">Estimativa</TableHead>
-            <TableHead className="w-[1%] text-center">Ações</TableHead>
+            <TableHead className="w-[300px]">Title</TableHead>
+            <TableHead className="w-[100px]">Estimated Time</TableHead>
+            <TableHead className="w-[1%]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

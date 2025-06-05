@@ -22,7 +22,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <Timer className="h-5 w-5" />
-              <CardTitle>Nome</CardTitle>
+              <CardTitle>Name</CardTitle>
             </CardHeader>
             <CardContent>{task.title}</CardContent>
           </Card>
@@ -30,7 +30,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <Timer className="h-5 w-5" />
-              <CardTitle>Descrição</CardTitle>
+              <CardTitle>Description</CardTitle>
             </CardHeader>
             <CardContent>{task.description}</CardContent>
           </Card>
@@ -38,7 +38,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <Timer className="h-5 w-5" />
-              <CardTitle>Tempo Estimado</CardTitle>
+              <CardTitle>Estimated Time</CardTitle>
             </CardHeader>
             <CardContent>{task.estimated_time}</CardContent>
           </Card>
@@ -62,7 +62,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <TestTube2 className="h-5 w-5" />
-              <CardTitle>Testes Sugeridos</CardTitle>
+              <CardTitle>Suggested Tests</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-6 space-y-2">
@@ -77,7 +77,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <CheckSquare className="h-5 w-5" />
-              <CardTitle>Critérios de Aceitação</CardTitle>
+              <CardTitle>Acceptance Criteria</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-6 space-y-2">
@@ -92,7 +92,7 @@ export function TaskContent() {
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <Lightbulb className="h-5 w-5" />
-              <CardTitle>Sugestão de Implementação</CardTitle>
+              <CardTitle>Implementation Suggestion</CardTitle>
             </CardHeader>
             <CardContent>{task.implementation_suggestion}</CardContent>
           </Card>
@@ -103,13 +103,13 @@ export function TaskContent() {
         <input type="hidden" name="task_id" value={task_id} />
         {task_id ? (
           <Button type="button">
-            <Link to={`/task/view/${task_id}`}>Detalhes da Tarefa</Link>
+            <Link to={`/task/view/${task_id}`}>Task Details</Link>
           </Button>
         ) : (
           <div>&nbsp;</div>
         )}
         <Button type="submit" disabled={fetcher.state !== 'idle'}>
-          Salvar Task
+          {fetcher.state === 'submitting' ? 'Saving...' : 'Save Task'}
         </Button>
       </fetcher.Form>
     </section>

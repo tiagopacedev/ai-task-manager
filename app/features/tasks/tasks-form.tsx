@@ -1,4 +1,4 @@
-import { useFetcher, useLoaderData } from 'react-router'
+import { useFetcher, useLoaderData, useNavigate } from 'react-router'
 
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -11,29 +11,32 @@ import { useEffect } from 'react'
 export function TaskForm() {
   const { task } = useLoaderData<typeof loader>()
   const fetcher = useFetcher()
+  const navigate = useNavigate()
+
   // Helper function to convert array to string
   const arrayToString = (arr: string[]) => arr.join('\n')
 
   useEffect(() => {
     if (fetcher.state === 'idle' && fetcher.data) {
       if (fetcher.data?.success) {
-        toast.success('Task atualizada com sucesso')
+        toast.success('Task updated successfully')
+        navigate(`/tasks`)
       } else {
-        toast.error('Falha ao atualizar a task')
+        toast.error('Failed to update task')
       }
     }
   }, [fetcher.state, fetcher.data])
 
   return (
     <fetcher.Form method="POST" className="space-y-6 p-6">
-      {/* Título */}
+      {/* Title */}
       <div className="space-y-2">
-        <Label htmlFor="title">Título</Label>
+        <Label htmlFor="title">Title</Label>
         <Input id="title" name="title" defaultValue={task.title} />
       </div>
-      {/* Descrição */}
+      {/* Description */}
       <div className="space-y-2">
-        <Label htmlFor="description">Descrição</Label>
+        <Label htmlFor="description">Description</Label>
         <Textarea
           className="h-36"
           id="description"
@@ -42,16 +45,16 @@ export function TaskForm() {
         />
       </div>
 
-      {/* Tempo Estimado */}
+      {/* Estimated Time */}
       <div className="space-y-2">
-        <Label htmlFor="estimatedTime">Tempo Estimado</Label>
+        <Label htmlFor="estimatedTime">Estimated Time</Label>
         <Input id="estimatedTime" name="estimated_time" defaultValue={task.estimated_time} />
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Etapas */}
+        {/* Steps */}
         <div className="space-y-2">
-          <Label htmlFor="steps">Etapas</Label>
+          <Label htmlFor="steps">Steps</Label>
           <Textarea
             className="h-36"
             id="steps"
@@ -61,9 +64,9 @@ export function TaskForm() {
           />
         </div>
 
-        {/* Testes Sugeridos */}
+        {/* Suggested Tests */}
         <div className="space-y-2">
-          <Label htmlFor="suggestedTests">Testes Sugeridos</Label>
+          <Label htmlFor="suggestedTests">Suggested Tests</Label>
           <Textarea
             className="h-36"
             id="suggestedTests"
@@ -75,9 +78,9 @@ export function TaskForm() {
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Critérios de Aceitação */}
+        {/* Acceptance Criteria */}
         <div className="space-y-2">
-          <Label htmlFor="acceptanceCriteria">Critérios de Aceitação</Label>
+          <Label htmlFor="acceptanceCriteria">Acceptance Criteria</Label>
           <Textarea
             className="h-36"
             id="acceptanceCriteria"
@@ -87,9 +90,9 @@ export function TaskForm() {
           />
         </div>
 
-        {/* Sugestão de Implementação */}
+        {/* Implementation Suggestion */}
         <div className="space-y-2">
-          <Label htmlFor="implementationSuggestion">Sugestão de Implementação</Label>
+          <Label htmlFor="implementationSuggestion">Implementation Suggestion</Label>
           <Textarea
             className="h-36"
             id="implementationSuggestion"
@@ -102,7 +105,7 @@ export function TaskForm() {
       <div className="flex justify-end">
         <input type="hidden" name="task_id" value={task.id} />
         <Button type="submit" disabled={fetcher.state !== 'idle'}>
-          Salvar Tarefa
+          {fetcher.state === 'submitting' ? 'Saving...' : 'Save Task'}
         </Button>
       </div>
     </fetcher.Form>

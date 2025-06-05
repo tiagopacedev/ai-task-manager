@@ -88,9 +88,9 @@ export function ChatsList() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[300px]">ID</TableHead>
-            <TableHead className="w-[300px]">Título</TableHead>
-            <TableHead className="w-[100px]">Criado em</TableHead>
-            <TableHead className="w-[1%] text-center">Ações</TableHead>
+            <TableHead className="w-[300px]">Title</TableHead>
+            <TableHead className="w-[100px]">Created At</TableHead>
+            <TableHead className="w-[1%] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

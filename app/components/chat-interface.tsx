@@ -134,7 +134,7 @@ export function ChatInterface() {
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input
             name="message"
-            placeholder="Descreva a tarefa..."
+            placeholder="Describe your task..."
             className="flex-1"
             ref={inputRef}
             value={inputValue}
