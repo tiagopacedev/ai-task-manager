@@ -60,7 +60,7 @@ export function TasksList() {
                     type="submit"
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-destructive hover:text-destructive"
+                    className="h-8 w-8 text-destructive hover:text-destructive cursor-pointer"
                     title="Delete task"
                   >
                     <input type="hidden" name="task_id" value={task.id} />

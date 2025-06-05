@@ -139,7 +139,7 @@ export function ChatsList() {
                     type="submit"
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-destructive hover:text-destructive"
+                    className="h-8 w-8 text-destructive hover:text-destructive cursor-pointer"
                     title="Delete chat"
                     name="action"
                     value="deleteChat"
