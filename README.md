@@ -1,5 +1,7 @@
 # AI Task Manager
 
+![hero](https://github.com/user-attachments/assets/6582a3f2-6539-4530-9b15-2658ce28ae81)
+
 ## Overview
 
 AI Task Manager lets users submit simple task descriptions and have them automatically refined by an AI chatbot based on the project’s tech stack. The goal is to transform basic ideas into structured, actionable tasks—just like a product manager would.
