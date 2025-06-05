@@ -1,87 +1,84 @@
-# Welcome to React Router!
+# AI Task Manager
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## Overview
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+AI Task Manager lets users submit simple task descriptions and have them automatically refined by an AI chatbot based on the project’s tech stack. The goal is to transform basic ideas into structured, actionable tasks—just like a product manager would.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Submit a simple task description (e.g., "create login form with authentication")
+- AI (OpenAI API) refines the description into detailed, structured JSON
+- Iterative chat for clarifying or improving tasks
+- Stores all chat history and task refinements
+- Saves finalized tasks and creates vector embeddings for semantic search
+- Semantic search: ask the chatbot about similar or related tasks
 
-## Getting Started
+## Tech Stack
 
-### Installation
+- **Frontend:** React Router 7 (Framework Mode), TypeScript, shadcn/ui, Tailwind CSS
+- **Database:** SQLite
+- **ORM:** Prisma ORM
+- **AI:** OpenAI API (LLM)
+- **Vector Storage:** Redis for fast retrieval
 
-Install the dependencies:
+## Example Workflow
+
+1. User submits a task description.
+2. The system sends it (plus tech stack info) to OpenAI with a prompt like:
+
+   ```
+   This project uses React Router 7 (framework mode), SQLite, and Prisma ORM.
+   Please refine the following task description and return a JSON object with:
+   title, description, steps, estimated_time, acceptance_criteria, suggested_tests, and implementation_suggestion.
+
+   Original description: "create login form with authentication"
+   ```
+
+3. OpenAI returns a structured JSON, e.g.:
+
+   ```json
+   {
+     "title": "Secure Login Form with Authentication",
+     "description": "Implement a modern login form with field validation, session-based authentication, and real-time error feedback.",
+     "estimated_time": "2 days",
+     "steps": [
+       "Create a form component using React",
+       "Add field validation using a suitable library",
+       "Connect backend for user authentication",
+       "Persist sessions using SQLite",
+       "Test full login and logout flow"
+     ],
+     "suggested_tests": [
+       "it('should render login form correctly')",
+       "it('should validate input fields')",
+       "it('should authenticate valid credentials')",
+       "it('should prevent access with invalid credentials')"
+     ],
+     "acceptance_criteria": [
+       "Login form displays properly with required fields",
+       "Invalid input is correctly flagged",
+       "Valid users can log in and maintain a session",
+       "Users are redirected upon login and logout"
+     ],
+     "implementation_suggestion": "Use React Hook Form for input validation, Prisma ORM for managing user data, and configure protected routes using React Router 7."
+   }
+   ```
+
+## Chat & Vector Search
+
+- All conversations are stored and can be revisited.
+- Finalized tasks are saved as vector embeddings for semantic/related-task search.
+- Chatbot supports questions like:
+  - "Which tasks involve authentication?"
+  - "List tasks that deal with form validation."
+
+## Quick Start
 
 ```bash
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
+cp .env.example .env   # Add your OpenAI and DB keys
+npx prisma migrate dev --name init
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+App runs at http://localhost:5173
