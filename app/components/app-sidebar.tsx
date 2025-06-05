@@ -19,7 +19,7 @@ const data = {
   user: {
     name: 'User Example',
     email: 'user@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: 'https://bundui-images.netlify.app/avatars/02.png',
   },
   navMain: [
     {
@@ -47,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="#">
+              <a href="/">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">Logo</span>
               </a>
